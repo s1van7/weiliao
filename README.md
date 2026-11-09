@@ -6,6 +6,8 @@
 
 > 本项目用于学习即时通讯系统的完整实现：WebSocket 实时同步、WebRTC 音视频、分片上传、本地语音识别、多端打包与增量更新。
 
+**下载安装包** → [Releases](https://github.com/s1van7/weiliao/releases/latest)：Android APK · Windows 安装包 · iOS Xcode 工程包
+
 ## 功能特性
 
 ### 账号与会话
