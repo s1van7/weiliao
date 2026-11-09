@@ -1,0 +1,104 @@
+%% ===== 微聊 1.1.8 增量类图：转发与语音转文字 =====
+classDiagram
+  class MessagesLib {
+    +ALLOWED_TYPES Set
+    +MERGED_TYPE string
+    +MERGED_MAX_ITEMS number
+    +MERGED_MAX_BYTES number
+    +createMessage(input) message
+    +normalizePayload(input) payload
+    +serializeMessage(row) message
+    +listMessagesBefore(input) messages
+    +listMessagesAfter(input) messages
+    +revokeMessage(input) message
+  }
+  class MessageSearchLib {
+    +SEARCH_TYPES Set
+    +searchMessages(input) results
+  }
+  class AsrLib {
+    +transcribe(payload, userId) text
+  }
+  class forwardJs {
+    +MERGED_TYPE string
+    +MERGED_MAX_ITEMS number
+    +MERGED_MAX_BYTES number
+    +forwardPayloadOf(message) payload
+    +mergedSummaryOf(message) string
+    +mergedContentOf(messages, source) string
+    +parseMergedContent(content) object
+  }
+  class formatJs {
+    +summarizeLastMessage(lastMessage, myId) string
+    +displayNameOf(person) string
+    +conversationTitle(conversation) string
+  }
+  class UseChatStore {
+    +forwardMessage(conversationId, message) message
+    +forwardMessages(conversationId, messages) message
+    +transcribeVoice(messageId) void
+    +_send(conversationId, payload) message
+    +_append(conversationId, message) void
+    +_replace(conversationId, clientId, message) void
+    +_bumpSummary(conversationId, message) void
+  }
+  class ChatPage {
+    +selecting boolean
+    +selected message[]
+    +actionMessage message
+    +handleMessageAction(message) void
+    +confirmForward() void
+    +enterMultiSelect() void
+    +confirmMergedForward() void
+    +confirmTranscribe() void
+  }
+  class MessageBubble {
+    +isMerged boolean
+    +renderMergedBranch() JSX
+    +cloneElement(content, handlers) JSX
+  }
+  class MergedMessage {
+    +message message
+    +detailOpen boolean
+    +renderCard() JSX
+    +openDetail() void
+  }
+  class MergedDetailModal {
+    +open boolean
+    +items item[]
+    +renderItems() JSX
+  }
+  class ConversationPicker {
+    +open boolean
+    +conversations conversation[]
+    +onSelect(conversationId) void
+  }
+  class VoiceMessage {
+    +rest props
+  }
+  class FileMessage {
+    +rest props
+  }
+  class CardMessage {
+    +rest props
+  }
+  class VideoMessage {
+    +rest props
+  }
+
+  ChatPage --> UseChatStore : 调用
+  ChatPage --> ConversationPicker : 选择目标
+  ChatPage --> MessageBubble : 渲染
+  ChatPage --> MergedDetailModal : 明细
+  UseChatStore --> forwardJs : 组装 payload
+  UseChatStore --> MessagesLib : REST/socket 落库
+  MessagesLib --> MessageSearchLib : 共享序列化
+  MessageBubble --> MergedMessage : merged 分支
+  MergedMessage --> MergedDetailModal : 打开明细
+  MergedMessage --> forwardJs : parseMergedContent
+  MessageBubble --> VoiceMessage : 透传事件
+  MessageBubble --> FileMessage : 透传事件
+  MessageBubble --> CardMessage : 透传事件
+  MessageBubble --> VideoMessage : 透传事件
+  formatJs --> forwardJs : 摘要约定
+  AsrLib ..> UseChatStore : transcribeVoice 回填

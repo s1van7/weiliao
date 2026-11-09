@@ -1,0 +1,37 @@
+{
+  "name": "weiliao-desktop",
+  "version": "1.1.11",
+  "private": true,
+  "description": "微聊 - 轻量即时聊天工具",
+  "author": "WeiLiao",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win nsis --x64"
+  },
+  "devDependencies": {
+    "electron": "^31.7.7",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.weiliao.chat",
+    "productName": "微聊",
+    "directories": { "output": "release", "buildResources": "build" },
+    "files": ["main.js", "preload.js", "www/**/*", "package.json"],
+    "win": {
+      "target": [{ "target": "nsis", "arch": ["x64"] }],
+      "icon": "build/icon.ico",
+      "artifactName": "WeiLiao-Setup-${version}.exe"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "微聊",
+      "installerLanguages": ["zh_CN"],
+      "language": "2052"
+    }
+  }
+}

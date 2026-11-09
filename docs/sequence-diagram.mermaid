@@ -1,0 +1,91 @@
+%% ===== 微聊 1.1.8 增量时序图：转发与语音转文字 =====
+
+%% ===== 场景 1：逐条转发 =====
+sequenceDiagram
+  participant U as 用户
+  participant CP as ChatPage
+  participant PK as ConversationPicker
+  participant ST as useChat
+  participant F as forward.js
+  participant API as api.sendMessage
+  participant BE as createMessage/normalizePayload
+  U->>CP: 长按消息
+  CP->>CP: handleMessageAction(message)
+  U->>CP: 菜单点「转发」
+  CP->>PK: 打开会话选择器
+  U->>PK: 选目标会话 convId
+  PK->>ST: forwardMessage(convId, message)
+  ST->>F: forwardPayloadOf(message)
+  F-->>ST: payload(type/content/媒体字段)
+  ST->>API: sendMessage(convId, {...payload, client_id})
+  API->>BE: POST /conversations/:id/messages
+  BE->>BE: normalizePayload 校验
+  BE->>BE: 落库 + 未读+1 + 摘要刷新
+  BE-->>API: {ok:true, message}
+  BE-->>ALL: emit message:new / conversation:update
+  API-->>ST: message
+  ST->>ST: _replace + _bumpSummary
+  ST-->>CP: 完成 + Toast
+
+%% ===== 场景 2：合并转发 =====
+sequenceDiagram
+  participant U as 用户
+  participant CP as ChatPage
+  participant PK as ConversationPicker
+  participant ST as useChat
+  participant F as forward.js
+  participant API as api.sendMessage
+  participant BE as createMessage/normalizePayload
+  U->>CP: 长按→「多选」进入多选态
+  U->>CP: 勾选若干条（selected）
+  U->>CP: 底部「合并转发」
+  CP->>PK: 选目标会话
+  U->>PK: 选 convId
+  PK->>ST: forwardMessages(convId, selected)
+  ST->>F: mergedContentOf(selected, sourceConv)
+  F-->>ST: JSON content (title+items 快照)
+  ST->>API: sendMessage(convId, {type:'merged', content, client_id})
+  API->>BE: POST /conversations/:id/messages
+  BE->>BE: normalizePayload merged 校验(JSON/≤100/≤64KB)
+  BE->>BE: 落库 + 未读 + 摘要
+  BE-->>API: {ok:true, message}
+  BE-->>ALL: emit message:new / conversation:update
+  API-->>ST: message
+  ST->>ST: 退出多选态 + 刷新
+
+%% ===== 场景 3：长按语音「转文字」（双方统一） =====
+sequenceDiagram
+  participant U as 用户
+  participant CP as ChatPage
+  participant ST as useChat
+  participant API as api.voiceTranscribe
+  participant ASR as asr.transcribe
+  participant V as VoiceMessage
+  U->>CP: 长按语音
+  CP->>CP: 菜单显示「转文字」(双方统一)
+  U->>CP: 点击
+  CP->>ST: transcribeVoice(messageId)
+  ST->>API: voiceTranscribe({message_id})
+  API->>ASR: transcribe(payload, userId)
+  ASR->>ASR: resolveVoiceMessage → ffmpeg → whisper(language=zh)
+  ASR-->>API: {text, message_id}
+  API-->>ST: {text, message_id}
+  ST->>ST: 回填 transcript 到消息缓存
+  ST-->>V: message.transcript 更新
+  V->>V: 渲染转写结果 + 复制按钮
+
+%% ===== 场景 4：merged 渲染与明细 =====
+sequenceDiagram
+  participant MB as MessageBubble
+  participant MM as MergedMessage
+  participant MD as MergedDetailModal
+  participant F as forward.js
+  MB->>MB: isMerged = (type==='merged')
+  MB->>MM: 渲染卡片(message)
+  MM->>F: parseMergedContent(message.content)
+  F-->>MM: {title, items}
+  MM-->>MB: 标题 + 摘要行
+  opt 点击卡片
+    MM->>MD: 打开只读明细(items)
+    MD->>MD: items.map(MessageBubble 只读渲染)
+  end

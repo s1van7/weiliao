@@ -1,0 +1,7 @@
+{
+  "appId": "com.weiliao.chat",
+  "appName": "微聊",
+  "webDir": "www",
+  "server": { "androidScheme": "https" },
+  "android": { "allowMixedContent": true, "backgroundColor": "#EDEDED" }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "wechat-lite",
+  "version": "1.1.11",
+  "private": true,
+  "description": "WeChat-like chat application (backend, batch 1: infrastructure + db + auth + friends)",
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "socket.io": "^4.8.1"
+  }
+}

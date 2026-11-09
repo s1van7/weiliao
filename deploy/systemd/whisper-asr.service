@@ -1,0 +1,20 @@
+# whisper.cpp 常驻推理服务（127.0.0.1:9000）
+# 安装：sudo cp deploy/systemd/whisper-asr.service /etc/systemd/system/
+#       sudo systemctl daemon-reload && sudo systemctl enable --now whisper-asr
+[Unit]
+Description=Whisper ASR server (whisper.cpp)
+After=network.target
+
+[Service]
+Type=simple
+# 按实际部署路径调整 WorkingDirectory 与 ExecStart 中的可执行文件 / 模型路径
+WorkingDirectory=/opt/whisper.cpp
+ExecStart=/opt/whisper.cpp/build/bin/whisper-server -m /opt/whisper.cpp/models/ggml-base-q5_1.bin --host 127.0.0.1 --port 9000 -t 2 --convert
+Restart=on-failure
+RestartSec=3
+# 2 核 1.7G 小内存机器：限制 CPU 与内存，避免拖垮聊天服务
+CPUQuota=150%
+MemoryMax=1G
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#07C160" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="微聊" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="description" content="微聊 —— 简洁的即时聊天工具" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png" />
+    <title>微聊</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #ededed;
+      }
+      #boot-splash {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #ededed;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <div id="boot-splash">
+      <svg width="64" height="64" viewBox="0 0 72 72" aria-hidden="true">
+        <rect width="72" height="72" rx="18" fill="#07C160" />
+        <path
+          d="M36 16.5c-11.3 0-20.5 7.4-20.5 16.5 0 5.2 3.1 9.9 7.9 12.9-.5 2.7-2 5.7-4.1 8.1 4-.4 7.6-1.8 10.4-3.8 2 .5 4.2.8 6.3.8 11.3 0 20.5-7.4 20.5-16.5S47.3 16.5 36 16.5Z"
+          fill="#FFFFFF"
+        />
+        <circle cx="28.6" cy="32.6" r="2.7" fill="#07C160" />
+        <circle cx="43.4" cy="32.6" r="2.7" fill="#07C160" />
+      </svg>
+    </div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

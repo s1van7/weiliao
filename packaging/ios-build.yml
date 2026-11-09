@@ -1,0 +1,52 @@
+name: Build iOS IPA (unsigned)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install web dependencies
+        working-directory: web
+        run: npm ci || npm install
+
+      - name: Build web assets for mobile
+        working-directory: web
+        env:
+          VITE_SERVER_URL: http://123.60.13.4
+        run: npx vite build --outDir ../ios/App/App/public --emptyOutDir
+
+      - name: Install CocoaPods
+        run: sudo gem install cocoapods
+
+      - name: Pod install
+        working-directory: ios/App
+        run: pod install --repo-update
+
+      - name: Archive (no code signing)
+        working-directory: ios/App
+        run: |
+          xcodebuild -workspace App.xcworkspace -scheme App \
+            -configuration Release -sdk iphoneos \
+            -archivePath build/App.xcarchive \
+            CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO \
+            archive
+
+      - name: Package unsigned IPA
+        working-directory: ios/App
+        run: |
+          mkdir -p build/Payload
+          cp -R build/App.xcarchive/Products/Applications/App.app build/Payload/
+          cd build && zip -r WeiLiao-unsigned.ipa Payload
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: WeiLiao-unsigned-ipa
+          path: ios/App/build/WeiLiao-unsigned.ipa

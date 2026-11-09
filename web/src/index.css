@@ -1,0 +1,316 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------ */
+/* 基础重置：微信风格                                                    */
+/* ------------------------------------------------------------------ */
+
+html {
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Source Han Sans SC', sans-serif;
+  font-size: 15px;
+  color: #111111;
+  background-color: #ededed;
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#root {
+  height: 100vh; /* 回退 */
+  height: 100dvh;
+  overflow: hidden;
+}
+
+button {
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+input,
+textarea {
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 16px; /* ≥16px 避免 iOS 聚焦缩放 */
+  color: inherit;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+textarea {
+  resize: none;
+}
+
+/* 消息正文可选中复制 */
+.wx-selectable {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* 安全区工具类 */
+.wx-safe-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.wx-safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* 小尺寸按钮的 44px 触控热区扩展（视觉尺寸不变） */
+.wx-tap {
+  position: relative;
+}
+
+.wx-tap::after {
+  content: '';
+  position: absolute;
+  left: -6px;
+  right: -6px;
+  top: -6px;
+  bottom: -6px;
+}
+
+/* ------------------------------------------------------------------ */
+/* 细滚动条                                                             */
+/* ------------------------------------------------------------------ */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.18);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.28);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.18) transparent;
+}
+
+/* ------------------------------------------------------------------ */
+/* 气泡：小三角用伪元素实现                                              */
+/* ------------------------------------------------------------------ */
+
+.wx-bubble {
+  position: relative;
+  max-width: 100%;
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 15px;
+  line-height: 1.45;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.wx-bubble-peer {
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+}
+
+.wx-bubble-peer::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 13px;
+  width: 8px;
+  height: 8px;
+  background: #ffffff;
+  border-left: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+  transform: rotate(45deg);
+}
+
+.wx-bubble-mine {
+  background: #95ec69;
+}
+
+.wx-bubble-mine::before {
+  content: '';
+  position: absolute;
+  right: -5px;
+  top: 13px;
+  width: 8px;
+  height: 8px;
+  background: #95ec69;
+  transform: rotate(45deg);
+}
+
+/* ------------------------------------------------------------------ */
+/* @ 高亮                                                              */
+/* ------------------------------------------------------------------ */
+
+.wx-mention {
+  color: #576b95;
+}
+
+/* ------------------------------------------------------------------ */
+/* 动效                                                                */
+/* ------------------------------------------------------------------ */
+
+@keyframes wx-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes wx-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes wx-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.wx-fade-in {
+  animation: wx-fade-in 160ms ease-out;
+}
+
+.wx-slide-up {
+  animation: wx-slide-up 180ms ease-out;
+}
+
+.wx-pop {
+  animation: wx-pop 160ms ease-out;
+}
+
+/* 语音消息播放中的律动条 */
+@keyframes wx-wave {
+  0%,
+  100% {
+    transform: scaleY(0.55);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.wave-bar {
+  transform-origin: center bottom;
+  animation: wx-wave 0.9s ease-in-out infinite;
+}
+
+/* 桌面端禁用文本选择拖拽干扰 */
+@media (min-width: 768px) {
+  .wx-drag-none {
+    -webkit-user-drag: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* 深色主题（.dark 挂在 <html> 上，与 tailwind darkMode:'class' 对应）      */
+/* 现有页面大量使用固定浅色工具类，这里用同类选择器做一次全局兜底换肤。      */
+/* ------------------------------------------------------------------ */
+.dark body {
+  background: #111111;
+  color: #e5e5e5;
+}
+
+.dark #root {
+  background: #111111;
+}
+
+.dark .bg-white {
+  background: #1e1e1e;
+}
+
+.dark .bg-\[\#EDEDED\] {
+  background: #111111;
+}
+
+.dark .bg-\[\#F5F5F5\] {
+  background: #161616;
+}
+
+.dark .bg-\[\#F7F7F7\] {
+  background: #1b1b1b;
+}
+
+.dark .bg-\[\#EFEFEF\] {
+  background: #222222;
+}
+
+.dark .bg-\[\#F2F2F2\] {
+  background: #222222;
+}
+
+.dark .text-\[\#111\] {
+  color: #e5e5e5;
+}
+
+.dark .text-\[\#333\] {
+  color: #e0e0e0;
+}
+
+.dark .text-\[\#555\] {
+  color: #c8c8c8;
+}
+
+.dark .text-\[\#666\] {
+  color: #c0c0c0;
+}
+
+.dark .text-\[\#888\] {
+  color: #9a9a9a;
+}
+
+.dark .text-\[\#999\] {
+  color: #8a8a8a;
+}
+
+.dark .border-\[\#E5E5E5\] {
+  border-color: #333333;
+}
+
+.dark .border-\[\#E0E0E0\] {
+  border-color: #333333;
+}
+
+.dark .divide-\[\#F0F0F0\] > :not([hidden]) ~ :not([hidden]) {
+  border-color: #2a2a2a;
+}

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#07C160">
+<title>下载微聊</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    background:#EDEDED;color:#191919;
+    min-height:100vh;padding:32px 20px calc(32px + env(safe-area-inset-bottom));
+    display:flex;flex-direction:column;align-items:center;
+  }
+  .logo{width:84px;height:84px;border-radius:19px;background:#07C160;
+    display:flex;align-items:center;justify-content:center;margin:12px auto 16px;
+    box-shadow:0 6px 18px rgba(7,193,96,.28)}
+  h1{font-size:24px;font-weight:600;text-align:center;letter-spacing:.5px}
+  .sub{font-size:14px;color:#888;text-align:center;margin:8px 0 28px;line-height:1.6}
+  .card{width:100%;max-width:420px;background:#fff;border-radius:14px;overflow:hidden;
+    box-shadow:0 1px 3px rgba(0,0,0,.06)}
+  .item{display:flex;align-items:center;gap:14px;padding:16px 18px;
+    border-bottom:1px solid #F0F0F0;text-decoration:none;color:inherit;
+    transition:background .15s}
+  .item:last-child{border-bottom:none}
+  .item:active{background:#F7F7F7}
+  .icon{width:44px;height:44px;border-radius:11px;flex:0 0 44px;
+    display:flex;align-items:center;justify-content:center;background:#F2F2F2}
+  .meta{flex:1;min-width:0}
+  .name{font-size:16px;font-weight:500;margin-bottom:3px}
+  .desc{font-size:12px;color:#999;line-height:1.4}
+  .btn{flex:0 0 auto;background:#07C160;color:#fff;font-size:13px;font-weight:500;
+    padding:8px 16px;border-radius:18px;white-space:nowrap}
+  .btn.alt{background:#F2F2F2;color:#555}
+  .tips{max-width:420px;margin-top:26px;font-size:12.5px;color:#8A8A8A;line-height:1.85}
+  .tips b{color:#555;font-weight:500}
+  .tips li{margin-left:16px;margin-bottom:4px}
+  .foot{margin-top:26px;font-size:12px;color:#B2B2B2;text-align:center}
+  .foot a{color:#07C160;text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="logo">
+  <svg width="46" height="46" viewBox="0 0 24 24" fill="none">
+    <path d="M12 4.2c-4.3 0-7.8 2.9-7.8 6.5 0 2 1.1 3.8 2.9 5-.2.9-.7 2-1.4 2.9-.2.3.1.6.4.5 1.5-.4 2.8-1.1 3.6-1.7.7.2 1.5.3 2.3.3 4.3 0 7.8-2.9 7.8-6.5S16.3 4.2 12 4.2z" fill="#fff"/>
+    <circle cx="9.2" cy="10.2" r="1.05" fill="#07C160"/>
+    <circle cx="14.8" cy="10.2" r="1.05" fill="#07C160"/>
+  </svg>
+</div>
+
+<h1>微聊</h1>
+<p class="sub">一个只属于小圈子的微信<br>安卓 · 苹果 · Windows 三端通用</p>
+
+<div class="card">
+  <a class="item" href="/downloads/WeiLiao-Android-1.1.6.apk" download>
+    <div class="icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="#3DDC84"><path d="M17.6 9.5l1.7-3a.4.4 0 0 0-.7-.4l-1.7 3a10.4 10.4 0 0 0-9.8 0l-1.7-3a.4.4 0 0 0-.7.4l1.7 3A8.7 8.7 0 0 0 2 16.5h20a8.7 8.7 0 0 0-4.4-7zM7 13.6a.9.9 0 1 1 0-1.8.9.9 0 0 1 0 1.8zm10 0a.9.9 0 1 1 0-1.8.9.9 0 0 1 0 1.8z"/></svg>
+    </div>
+    <div class="meta">
+      <div class="name">Android 安装包</div>
+      <div class="desc">APK · 3.0 MB · 点击即装</div>
+    </div>
+    <span class="btn">下载</span>
+  </a>
+
+  <a class="item" href="/downloads/WeiLiao-Setup-1.1.6.exe" download>
+    <div class="icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="#00A4EF"><path d="M3 5.5l7.5-.9v7.1H3V5.5zm8.4-1l9.6-1.3v8.6h-9.6V4.5zM3 12.6h7.5v7.1L3 18.8v-6.2zm8.4 0H21v8.6l-9.6-1.3v-7.3z"/></svg>
+    </div>
+    <div class="meta">
+      <div class="name">Windows 安装包</div>
+      <div class="desc">EXE · 75 MB · 双击安装</div>
+    </div>
+    <span class="btn">下载</span>
+  </a>
+
+  <a class="item" href="/downloads/WeiLiao-iOS-Xcode-1.1.6.zip" download>
+    <div class="icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="#111"><path d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9-.7 0-1.8-.8-3-.8-1.5 0-2.9.9-3.7 2.2-1.6 2.7-.4 6.7 1.1 8.9.7 1.1 1.6 2.3 2.8 2.2 1.1 0 1.5-.7 2.9-.7 1.3 0 1.7.7 2.9.7 1.2 0 2-1.1 2.7-2.2.9-1.2 1.2-2.5 1.2-2.5-.1 0-2.4-.9-2.4-3.4zM14.1 5.8c.6-.8 1.1-1.9 1-3-.9 0-2 .6-2.7 1.4-.6.7-1.1 1.8-1 2.9 1 .1 2.1-.5 2.7-1.3z"/></svg>
+    </div>
+    <div class="meta">
+      <div class="name">iOS 工程包</div>
+      <div class="desc">ZIP · 需 Mac 签名</div>
+    </div>
+    <span class="btn alt">下载</span>
+  </a>
+
+  <a class="item" href="/">
+    <div class="icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#07C160" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3.5 12h17M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></svg>
+    </div>
+    <div class="meta">
+      <div class="name">直接用网页版</div>
+      <div class="desc">免安装 · 浏览器打开即用</div>
+    </div>
+    <span class="btn">打开</span>
+  </a>
+</div>
+
+<div class="tips">
+  <b>安装说明</b>
+  <ul>
+    <li><b>安卓</b>：下载后点击安装，系统提示「未知来源」时允许一次即可。</li>
+    <li><b>Windows</b>：双击 EXE，如弹出 SmartScreen 提示，点「更多信息 → 仍要运行」。</li>
+    <li><b>苹果</b>：iPhone 建议直接用网页版并「添加到主屏幕」，全屏体验与 App 一致；要 IPA 需用 Mac 上的 Xcode 打开工程包自行签名。</li>
+  </ul>
+</div>
+
+<p class="foot">登录地址 <a href="/" id="site-link">本站</a> · 三端同一个账号，消息实时同步</p>
+
+<script>
+  // 展示当前访问域名，避免把部署域名写死在代码里
+  const link = document.getElementById('site-link');
+  if (link) {
+    link.href = location.origin;
+    link.textContent = location.host;
+  }
+</script>
+</body>
+</html>
