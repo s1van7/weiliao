@@ -20,7 +20,8 @@ jobs:
       - name: Build web assets for mobile
         working-directory: web
         env:
-          VITE_SERVER_URL: http://123.60.13.4
+          # 后端地址通过仓库 Secrets 注入，不要硬编码到仓库里
+          VITE_SERVER_URL: ${{ secrets.SERVER_URL }}
         run: npx vite build --outDir ../ios/App/App/public --emptyOutDir
 
       - name: Install CocoaPods
